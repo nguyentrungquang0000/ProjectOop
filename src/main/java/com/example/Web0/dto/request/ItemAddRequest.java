@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ItemAddRequest {
+    private Long id;
     private Long productId;
     private Long quantity;
 }

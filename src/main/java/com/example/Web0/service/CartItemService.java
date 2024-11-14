@@ -6,4 +6,6 @@ import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 
 public interface CartItemService {
     CartItemEntity addItem(ItemAddRequest request);
+    CartItemEntity updateItem(ItemAddRequest request);
+    void deletItem(Long id);
 }

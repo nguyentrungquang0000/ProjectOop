@@ -7,6 +7,7 @@ import com.example.Web0.entities.UserEntity;
 import com.example.Web0.repository.UserRepository;
 import com.example.Web0.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,12 @@ public class UserController {
         return userService.login(request);
     }
 
+//    @PostMapping("/logout")
+//    public String logout() {
+//        SecurityContextHolder.clearContext();
+//        return "out sucess";
+//    }
+
     @GetMapping("/users")
     public List<UserEntity> findAll() {
         return userService.findAll();
@@ -37,7 +44,7 @@ public class UserController {
     public UserEntity findMyInfo() {
         return userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
     }
-
+    @PreAuthorize("permitAll()")
     @PostMapping("/register")
     public UserEntity register(@RequestBody UserRegisterRequest request) {
         return userService.register(request);

@@ -50,4 +50,16 @@ public class CartItemServiceImpl implements CartItemService {
 
         return cartItemRepository.save(item);
     }
+
+    @Override
+    public CartItemEntity updateItem(ItemAddRequest request) {
+        CartItemEntity cartItemEntity= modelMapper.map(request,CartItemEntity.class);
+        return cartItemRepository.save(cartItemEntity);
+    }
+
+    @Override
+    public void deletItem(Long id) {
+        cartItemRepository.deleteById(id);
+        return;
+    }
 }
