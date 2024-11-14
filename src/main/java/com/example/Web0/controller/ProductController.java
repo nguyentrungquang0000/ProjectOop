@@ -28,8 +28,8 @@ public class ProductController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/admin/delete")
-    public String deleteProduct(@RequestParam Long id) {
+    @DeleteMapping("/admin/delete-{id}")
+    public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return "deleted successfully";
     }
