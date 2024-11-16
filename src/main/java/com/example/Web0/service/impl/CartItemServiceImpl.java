@@ -44,9 +44,6 @@ public class CartItemServiceImpl implements CartItemService {
         CartItemEntity item= modelMapper.map(request,CartItemEntity.class);
         item.setCart(cart);
         item.setProduct(productRepository.findById(request.getProductId()).get());
-//        List<CartItemEntity> cartItemList = cart.
-//        cartItemList.add(item);
-//        cart.setCartItems(cartItemList);
 
         return cartItemRepository.save(item);
     }

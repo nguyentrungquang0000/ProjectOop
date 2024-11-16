@@ -6,7 +6,9 @@ import com.example.Web0.repository.OrderHistoryRepository;
 import com.example.Web0.repository.OrderItemRepository;
 import com.example.Web0.repository.UserRepository;
 import com.example.Web0.repository.impl.CartRepository;
+import com.example.Web0.service.CartItemService;
 import com.example.Web0.service.OrderHistoryService;
+import com.example.Web0.service.UserService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,6 +39,9 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CartItemService cartItemService;
+
     @Override
     @Transactional
     public void addOrderHistory() {
@@ -44,18 +50,26 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
         CartEntity cartEntity= userEntity.getCart();
         OrderHistoryEntity orderHistoryEntity = new OrderHistoryEntity();
         orderHistoryEntity.setUser(userEntity);
+        orderHistoryEntity.setCreatedAt(new Date());
         orderHistoryEntity.setTotalAmount(cartEntity.getCartItems().stream().mapToLong(item->item.getTotalPrice()).sum());
         orderHistoryRepository.save(orderHistoryEntity);
+
         List<OrderItemEntity> listItem= new ArrayList<>();
         for(CartItemEntity cartItemEntity: cartEntity.getCartItems()) {
             OrderItemEntity orderItemEntity = modelMapper.map(cartItemEntity, OrderItemEntity.class);
             orderItemEntity.setOrderHistory(orderHistoryEntity);
             listItem.add(orderItemEntity);
+            orderItemEntity.setId(null);
             orderItemRepository.save(orderItemEntity);
-            cartItemRepository.deleteById(cartItemEntity.getCartItemId());
         }
+
         orderHistoryEntity.setOrderItems(listItem);
         orderHistoryRepository.save(orderHistoryEntity);
+
+        cartItemRepository.deleteAll(cartEntity.getCartItems());
+        cartEntity.getCartItems().clear();
+        cartRepository.save(cartEntity);
+
 
     }
 
