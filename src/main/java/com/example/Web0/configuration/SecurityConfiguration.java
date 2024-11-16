@@ -30,6 +30,8 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET, "/api/search").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/myinfo").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/login", "/").permitAll()
+                                .requestMatchers("/css/**", "/js/**", "/assets/**", "/img/**").permitAll()
                                 .anyRequest().authenticated());
         httpSecurity
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));

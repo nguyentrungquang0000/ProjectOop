@@ -1,0 +1,100 @@
+
+
+
+
+/* Header image */
+.header-full {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.header-full::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Lớp phủ tối */
+    z-index: 1;
+}
+
+.img_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.text-overlay {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.display-text {
+    color: #FFD700; /* Màu vàng nổi bật */
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8); /* Bóng chữ đậm */
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.4); /* Nền bán trong suốt cho chữ */
+    border-radius: 8px;
+}
+
+/* Footer */
+.footer {
+    background-color: #333; /* Nền tối cho độ tương phản */
+    color: #fff; /* Màu chữ trắng */
+    padding: 30px 0; /* Khoảng cách trên và dưới */
+    display: flex;
+    justify-content: space-between; /* Chia các phần ra hai bên */
+    align-items: flex-start; /* Canh phần trên cùng */
+    width: 100%; /* Đảm bảo chiếm hết chiều ngang */
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5); /* Thêm hiệu ứng bóng đổ */
+    margin-top: auto; /* Đẩy footer xuống cuối cùng */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px; /* Giới hạn chiều rộng */
+    margin: 0 auto; /* Canh giữa container */
+    padding: 0 20px; /* Cách đều hai bên */
+}
+
+.footer-section {
+    flex: 1;
+    padding: 0 20px; /* Khoảng cách giữa các phần */
+}
+
+.footer-section:first-child {
+    padding-left: 30px; /* Cách trái */
+}
+
+.footer-section:last-child {
+    padding-right: 30px; /* Cách phải */
+    text-align: right; /* Canh phải */
+}
+
+.footer-section h2 {
+    font-size: 1.5rem; /* Cỡ chữ lớn hơn */
+    color: #FFD700; /* Màu vàng cho tiêu đề */
+    margin-bottom: 10px; /* Khoảng cách dưới */
+    text-transform: uppercase; /* Viết hoa tiêu đề */
+    font-weight: bold; /* Tăng độ đậm */
+}
+
+.footer-section p {
+    font-size: 1rem;
+    line-height: 1.6;
+}

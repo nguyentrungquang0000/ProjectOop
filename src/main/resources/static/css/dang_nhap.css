@@ -1,0 +1,200 @@
+/* Đảm bảo header responsive */
+@media (max-width: 768px) {
+    .header .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .navbar-nav {
+        justify-content: center;
+        margin-top: 10px;
+    }
+}
+
+/* Main Form Container */
+.container-form {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.header-title {
+    font-size: 2.5rem;
+    color: #FFD700;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form Container */
+.form {
+    background-color: #fff;
+    padding: 30px;
+    width: 350px; /* Tăng chiều rộng form */
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Thêm hiệu ứng đổ bóng */
+    text-align: center;
+}
+
+.form input[type="text"],
+.form input[type="password"],
+.form input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
+}
+
+.form input[type="text"]:focus,
+.form input[type="password"]:focus,
+.form input[type="email"]:focus {
+    border-color: #FF5722; /* Đổi màu border khi focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 87, 34, 0.5);
+}
+
+/* Button Styles */
+.form button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    background-color: #FF5722;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.form button:hover {
+    background-color: #E64A19;
+}
+
+/* Toggle Buttons */
+.toggle-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Khoảng cách giữa các nút */
+}
+
+.toggle-btns button,
+.toggle-btns a button {
+    width: 100%; /* Đồng bộ chiều rộng */
+    padding: 12px;
+    margin: 0;
+    border: none;
+    border-radius: 8px;
+    background-color: #FF5722;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-btns button:hover,
+.toggle-btns a button:hover {
+    background-color: #E64A19;
+}
+
+#error-message {
+    color: red;
+    display: none;
+    font-size: 0.9rem;
+}
+
+/* Footer */
+.footer {
+    background-color: #333; /* Nền tối cho độ tương phản */
+    color: #fff; /* Màu chữ trắng */
+    padding: 30px 0; /* Khoảng cách trên và dưới */
+    display: flex;
+    justify-content: space-between; /* Chia các phần ra hai bên */
+    align-items: flex-start; /* Canh phần trên cùng */
+    width: 100%; /* Đảm bảo chiếm hết chiều ngang */
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5); /* Thêm hiệu ứng bóng đổ */
+    margin-top: auto; /* Đẩy footer xuống cuối cùng */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px; /* Giới hạn chiều rộng */
+    margin: 0 auto; /* Canh giữa container */
+    padding: 0 20px; /* Cách đều hai bên */
+}
+
+.footer-section {
+    flex: 1;
+    padding: 0 20px; /* Khoảng cách giữa các phần */
+}
+
+.footer-section:first-child {
+    padding-left: 30px; /* Cách trái */
+}
+
+.footer-section:last-child {
+    padding-right: 30px; /* Cách phải */
+    text-align: right; /* Canh phải */
+}
+
+.footer-section h2 {
+    font-size: 1.5rem; /* Cỡ chữ lớn hơn */
+    color: #FFD700; /* Màu vàng cho tiêu đề */
+    margin-bottom: 10px; /* Khoảng cách dưới */
+    text-transform: uppercase; /* Viết hoa tiêu đề */
+    font-weight: bold; /* Tăng độ đậm */
+}
+
+.footer-section p {
+    font-size: 1rem;
+    line-height: 1.6; /* Khoảng cách dòng thoáng hơn */
+    margin: 5px 0;
+}
+
+/* Xóa khoảng trắng bên dưới */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Đảm bảo chiều cao màn hình */
+}
+
+.main-content {
+    flex: 1; /* Đẩy footer xuống dưới */
+}
+
+/* Responsive footer */
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-section {
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    .footer-section:first-child,
+    .footer-section:last-child {
+        padding: 10px 20px;
+    }
+}
