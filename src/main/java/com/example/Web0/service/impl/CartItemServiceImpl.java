@@ -7,17 +7,14 @@ import com.example.Web0.entities.UserEntity;
 import com.example.Web0.repository.CartItemRepository;
 import com.example.Web0.repository.ProductRepository;
 import com.example.Web0.repository.UserRepository;
-import com.example.Web0.repository.impl.CartRepository;
 import com.example.Web0.service.CartItemService;
-import com.example.Web0.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CartItemServiceImpl implements CartItemService {
@@ -25,23 +22,23 @@ public class CartItemServiceImpl implements CartItemService {
     private CartItemRepository cartItemRepository;
 
     @Autowired
-    private UserRepository  userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private ProductRepository productRepository;
-
-    @Autowired
-    private CartRepository cartRepository;
 
     @Autowired
     private ModelMapper modelMapper;
 
     @Override
     public CartItemEntity addItem(ItemAddRequest request) {
-        String userName=SecurityContextHolder.getContext().getAuthentication().getName();
-        UserEntity user =userRepository.findByUsername(userName);
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity user = userRepository.findByUsername(userName);
+        if (user == null) {
+            throw new EntityNotFoundException("User not found");
+        }
         CartEntity cart = user.getCart();
-        CartItemEntity item= modelMapper.map(request,CartItemEntity.class);
+        CartItemEntity item = modelMapper.map(request, CartItemEntity.class);
         item.setCart(cart);
         item.setProduct(productRepository.findById(request.getProductId()).get());
 
@@ -50,13 +47,28 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public CartItemEntity updateItem(ItemAddRequest request) {
-        CartItemEntity cartItemEntity= modelMapper.map(request,CartItemEntity.class);
+        CartItemEntity cartItemEntity = cartItemRepository.findById(request.getId())
+                .orElseThrow(() -> new EntityNotFoundException("CartItem not found!"));
+        cartItemEntity.setQuantity(request.getQuantity() + cartItemEntity.getQuantity());
         return cartItemRepository.save(cartItemEntity);
     }
 
     @Override
-    public void deletItem(Long id) {
+    public void deleteItem(Long id) {
         cartItemRepository.deleteById(id);
-        return;
+    }
+
+    @Override
+    public CartItemEntity getItem(Long id) {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity user = userRepository.findByUsername(userName);
+        if (user == null) {
+            throw new EntityNotFoundException("User not found");
+        }
+        CartEntity cart = user.getCart();
+        CartItemEntity cartItemEntity = cart.getCartItems().stream()
+                .filter(item -> Objects.equals(item.getProduct().getId(), id))
+                .findFirst().orElse(null);
+        return cartItemEntity;
     }
 }

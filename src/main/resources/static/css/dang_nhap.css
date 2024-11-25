@@ -1,16 +1,8 @@
-/* Đảm bảo header responsive */
-@media (max-width: 768px) {
-    .header .container {
-        flex-direction: column;
-        align-items: center;
-    }
-    .navbar-nav {
-        justify-content: center;
-        margin-top: 10px;
-    }
-}
 
-/* Main Form Container */
+
+/*  Form Container */
+
+
 .container-form {
     margin-top: 100px;
     display: flex;
@@ -27,13 +19,12 @@
     margin-bottom: 20px;
 }
 
-/* Form Container */
 .form {
     background-color: #fff;
     padding: 30px;
-    width: 350px; /* Tăng chiều rộng form */
+    width: 350px; 
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Thêm hiệu ứng đổ bóng */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
     text-align: center;
 }
 
@@ -47,13 +38,13 @@
     border-radius: 8px;
     background-color: #f9f9f9;
     font-size: 1rem;
-    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
+    box-sizing: border-box; 
 }
 
 .form input[type="text"]:focus,
 .form input[type="password"]:focus,
 .form input[type="email"]:focus {
-    border-color: #FF5722; /* Đổi màu border khi focus */
+    border-color: #FF5722; 
     outline: none;
     box-shadow: 0 0 5px rgba(255, 87, 34, 0.5);
 }
@@ -83,12 +74,12 @@
 .toggle-btns {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Khoảng cách giữa các nút */
+    gap: 10px; 
 }
 
 .toggle-btns button,
 .toggle-btns a button {
-    width: 100%; /* Đồng bộ chiều rộng */
+    width: 100%; 
     padding: 12px;
     margin: 0;
     border: none;
@@ -196,5 +187,17 @@ body {
     .footer-section:first-child,
     .footer-section:last-child {
         padding: 10px 20px;
+    }
+}
+
+/* Đảm bảo header responsive */
+@media (max-width: 768px) {
+    .header .container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .navbar-nav {
+        justify-content: center;
+        margin-top: 10px;
     }
 }

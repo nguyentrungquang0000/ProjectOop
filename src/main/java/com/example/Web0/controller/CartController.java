@@ -3,7 +3,6 @@ package com.example.Web0.controller;
 import com.example.Web0.entities.CartEntity;
 import com.example.Web0.entities.CartItemEntity;
 import com.example.Web0.entities.UserEntity;
-import com.example.Web0.repository.CartItemRepository;
 import com.example.Web0.repository.UserRepository;
 import com.example.Web0.repository.impl.CartRepository;
 import jakarta.annotation.security.PermitAll;
@@ -23,9 +22,6 @@ public class CartController {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private CartItemRepository cartItemRepository;
 
     @PermitAll
     @GetMapping("/cart-item")

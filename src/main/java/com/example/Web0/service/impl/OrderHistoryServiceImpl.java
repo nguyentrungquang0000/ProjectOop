@@ -6,12 +6,11 @@ import com.example.Web0.repository.OrderHistoryRepository;
 import com.example.Web0.repository.OrderItemRepository;
 import com.example.Web0.repository.UserRepository;
 import com.example.Web0.repository.impl.CartRepository;
-import com.example.Web0.service.CartItemService;
 import com.example.Web0.service.OrderHistoryService;
-import com.example.Web0.service.UserService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -39,23 +38,22 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private CartItemService cartItemService;
-
     @Override
     @Transactional
     public void addOrderHistory() {
-        String userName= SecurityContextHolder.getContext().getAuthentication().getName();
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         UserEntity userEntity = userRepository.findByUsername(userName);
-        CartEntity cartEntity= userEntity.getCart();
+        CartEntity cartEntity = userEntity.getCart();
         OrderHistoryEntity orderHistoryEntity = new OrderHistoryEntity();
         orderHistoryEntity.setUser(userEntity);
         orderHistoryEntity.setCreatedAt(new Date());
-        orderHistoryEntity.setTotalAmount(cartEntity.getCartItems().stream().mapToLong(item->item.getTotalPrice()).sum());
+        orderHistoryEntity.setTotalAmount(cartEntity.getCartItems().stream().mapToLong(item -> item.getTotalPrice()).sum());
         orderHistoryRepository.save(orderHistoryEntity);
-
-        List<OrderItemEntity> listItem= new ArrayList<>();
-        for(CartItemEntity cartItemEntity: cartEntity.getCartItems()) {
+        if (cartEntity.getCartItems().isEmpty()) {
+            throw new RuntimeException("Giỏ hàng rỗng!");
+        }
+        List<OrderItemEntity> listItem = new ArrayList<>();
+        for (CartItemEntity cartItemEntity : cartEntity.getCartItems()) {
             OrderItemEntity orderItemEntity = modelMapper.map(cartItemEntity, OrderItemEntity.class);
             orderItemEntity.setOrderHistory(orderHistoryEntity);
             listItem.add(orderItemEntity);
@@ -75,8 +73,9 @@ public class OrderHistoryServiceImpl implements OrderHistoryService {
 
     @Override
     public List<OrderHistoryEntity> getOrderHistory() {
-        String userName=SecurityContextHolder.getContext().getAuthentication().getName();
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
         UserEntity userEntity = userRepository.findByUsername(userName);
-        return userEntity.getOrderHistories();
+        return orderHistoryRepository.findByUserId(userEntity.getId(), sort);
     }
 }

@@ -1,0 +1,317 @@
+#cart-container {
+    margin-left: auto;
+}
+
+#user-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.user-icon {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+#user-container:hover .dropdown-content {
+    display: block;
+}
+
+
+
+
+
+/* Nút Mua Ngay */
+/* Nút Mua Ngay ở chính giữa dưới */
+.to-products {
+    position: absolute; /* Đặt nút lên ảnh nền */
+    bottom: 20px; /* Cách mép dưới ảnh nền 20px */
+    left: 50%; /* Căn giữa theo chiều ngang */
+    transform: translateX(-50%); /* Dịch tâm nút theo chiều ngang */
+    background-color: #FFD700; /* Màu nền nổi bật */
+    color: #000; /* Màu chữ */
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    text-transform: uppercase;
+    text-align: center;
+    z-index: 2; /* Đảm bảo nút nằm trên hình nền */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng */
+}
+
+.to-products a {
+    text-decoration: none;
+    color: inherit; /* Giữ nguyên màu chữ của nút */
+}
+
+.to-products:hover {
+    background-color: #FFA500; /* Màu khác khi hover */
+    transform: translateX(-50%) scale(1.1); /* Phóng to nhẹ khi hover */
+}
+
+
+
+
+.slider{
+    width: 1300px;
+    max-width: 100vw;
+    height:  700px;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.list{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    width: max-content;
+    transition: 1s;
+}
+
+.list img{
+    width: 1300px;
+    max-width: 100vw;
+    height: 100%;
+    object-fit: cover;
+}
+
+.buttons{
+    position: absolute;
+    top: 45%;
+    left: 5%;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.buttons button{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    font-family: monospace;
+    font-weight: bold;
+
+}
+
+.dots{
+    position: absolute;
+    bottom: 10px;
+    color: #fff;
+    left:0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.dots li{
+    list-style: none;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    margin: 20px;
+    border-radius: 20px;
+    transition: 1s;
+
+}
+
+.dots li.active{
+    width: 30px;
+
+}
+
+@media screen and (max-width:768px){
+    .slider{
+        height: 400px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .slide img {
+        height: 250px;
+    }
+
+    .slide-content {
+        bottom: 20px;
+        left: 20px;
+        padding: 15px;
+        max-width: calc(100% - 40px);
+    }
+
+    .slide-content h3 {
+        font-size: 18px;
+    }
+
+    .slide-content p {
+        font-size: 14px;
+    }
+
+    .slider-btn {
+        padding: 5px 10px;
+        font-size: 18px;
+    }
+}
+
+
+
+
+
+
+
+
+#wp-products {
+    padding-top:116px;
+    padding-bottom: 78px;
+    padding-left:134px;
+    padding-right:134px;
+}
+
+#wp-products h2 {
+    text-align: center;
+    margin-bottom: 76px;
+    font-size:32px;
+    color:#626a67;
+}
+
+#list-products {
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0;
+}
+
+#list-products .item {
+    width: 290px;
+    height: 374px;
+    background: #362f2f;
+    border-radius: 10px;
+    margin-bottom: 50px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+#list-products .item a {
+    display: block;
+    text-decoration: none; /* Loại bỏ gạch chân */
+    color: inherit; /* Giữ màu chữ từ thẻ cha */
+    height: 100%; /* Đảm bảo bao phủ toàn bộ khối sản phẩm */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#list-products .item a:hover {
+    transform: translateY(-5px); /* Hiệu ứng hover */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+#list-products .item img {
+    width: 100%;
+    height: 70%;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: block;
+}
+
+#list-products .item .name {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #fff;
+}
+
+#list-products .item .desc {
+    color: #fff;
+}
+
+#list-products .item .price {
+    color: #FFD700;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+@media (max-width: 768px) {
+    #wp-products {
+      padding: 30px 15px;
+    }
+  
+    #wp-products h2 {
+      font-size: 24px;
+      margin-bottom: 40px;
+    }
+  
+    #list-products {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    #list-products .item {
+      width: 250px;
+      height: 320px;
+      margin-bottom: 30px;
+    }
+  
+    #list-products .item img {
+      height: 65%;
+    }
+  
+    #list-products .item .name {
+      margin-top: 15px;
+      font-size: 16px;
+    }
+  
+    #list-products .item .desc {
+      font-size: 14px;
+    }
+  
+    #list-products .item .price {
+      font-size: 15px;
+    }
+  }

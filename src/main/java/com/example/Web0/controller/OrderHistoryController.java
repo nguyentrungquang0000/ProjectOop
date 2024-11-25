@@ -19,13 +19,13 @@ public class OrderHistoryController {
     @Autowired
     private OrderHistoryService orderHistoryService;
 
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/history/add")
     public void addHistory(){
         orderHistoryService.addOrderHistory();
     }
 
-    @PreAuthorize("permitAll()")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/histories")
     public List<OrderHistoryEntity> getHistory(){
         return orderHistoryService.getOrderHistory();

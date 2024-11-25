@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order List with Product Filter</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+<div class="flex">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md h-screen">
+        <div class="p-6">
+            <div class="flex items-center">
+                <img src="https://dummyimage.com/40x40/000/fff" alt="Logo" class="w-10 h-10">
+                <h1 class="ml-3 text-lg font-bold">Cô Cô Shop</h1>
+            </div>
+        </div>
+        <nav class="mt-6">
+            <ul>
+                <li class="p-4 hover:bg-gray-200 flex items-center">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span class="ml-3">Bảng Số Liệu Đơn Hàng</span>
+                </li>
+                <li class="p-4 hover:bg-gray-200 flex items-center">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="ml-3">Orders</span>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold">Order List</h1>
+            <div>
+                <a th:href="@{/admin/add-product}"
+                   class="bg-blue-500 text-white px-4 py-2 rounded-lg mr-3">
+                    Thêm Sản Phẩm Mới
+                </a>
+                <a th:href="@{/}"
+                   class="bg-blue-500 text-white px-4 py-2 rounded-lg">
+                    Trang chủ
+                </a>
+            </div>
+        </div>
+
+        <!-- Product Search by Name and Price -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4">Tìm Kiêm Sàn Sản Phẩm</h2>
+            <form class="flex items-center mb-4" method="get" th:action="@{/admin/}">
+                <input id="product-name" type="text" placeholder="Product Name"
+                       name="name"
+                       class="border border-gray-300 rounded-lg px-3 py-2 mr-2">
+                <input id="min-price" type="number" placeholder="Min Price"
+                       name="minPrice"
+                       class="border border-gray-300 rounded-lg px-3 py-2 mr-2">
+                <input id="max-price" type="number" placeholder="Max Price"
+                       name="maxPrice"
+                       class="border border-gray-300 rounded-lg px-3 py-2 mr-2">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Search</button>
+            </form>
+        </div>
+
+        <!-- Order Table -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-bold mb-4">Order List</h2>
+            <table class="w-full text-left border-collapse" id="order-table">
+                <thead>
+                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <th class="py-3 px-4">id</th>
+                    <th class="py-3 px-4">Tên Sản Phẩm</th>
+                    <th class="py-3 px-4">Giá Tiền(VND)</th>
+                    <th class="py-3 px-4">Calories</th>
+                    <th class="py-3 px-4">Khối lượng</th>
+                    <th class="py-3 px-4">Hành động</th>
+                </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm font-light">
+                <tr class="border-b border-gray-200 hover:bg-gray-100" th:each="product : ${listProducts}">
+                    <td class="py-3 px-4" th:text="${product.id}"></td>
+                    <td class="py-3 px-4" th:text="${product.name}"></td>
+                    <td class="py-3 px-4" th:text="${product.price}"></td>
+                    <td class="py-3 px-4" th:text="${product.calories}"></td>
+                    <td class="py-3 px-4" th:text="${product.weight}"></td>
+                    <td class="py-3 px-4">
+                        <!-- Edit icon with link -->
+                        <a th:href="@{/admin/edit-product/{id}(id=${product.id})}" class="text-green-500 mr-2">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <!-- Delete icon -->
+                        <button th:data-id="${product.id}" class="text-red-500 deleteProductBtn">
+                            <i class="fas fa-trash" th:data-id="${product.id}"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- JavaScript for Filtering and Actions -->
+<script>
+    const deleteProductBtn = document.querySelectorAll(".deleteProductBtn");
+    deleteProductBtn.forEach(btn => {
+        btn.addEventListener("click", (evt) => {
+            const id = evt.target.getAttribute("data-id");
+            console.log(evt.target);
+            $.ajax({
+                url: `/api/admin/delete-${id}`,
+                method: "DELETE",
+                success: (res) => {
+                    console.log(res);
+                    alert("DELETE SUCCESS");
+                    window.location.reload();
+                },
+                error: (err) => {
+                    console.log(err);
+                    alert("DELETE FAIL");
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

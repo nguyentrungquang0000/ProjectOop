@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" th:href="@{/css/admin_css.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Trang Admin</h1>
+
+    <div class="form-group">
+        <label for="productName">Tên sản phẩm:</label>
+        <input type="text" id="productName" th:value="${product.name}" placeholder="Enter product name">
+    </div>
+
+    <div class="form-group">
+        <label for="productPrice">Giá (VNĐ):</label>
+        <input type="number" id="productPrice" th:value="${product.price}" placeholder="Enter product price">
+    </div>
+
+    <div class="form-group">
+        <label for="productCalories">Calories (kcal):</label>
+        <input type="number" id="productCalories" th:value="${product.calories}" placeholder="Enter calories">
+    </div>
+
+    <div class="form-group">
+        <label for="productWeight">Cân nặng (grams):</label>
+        <input type="number" id="productWeight" placeholder="Enter weight" th:value="${product.weight}">
+    </div>
+
+    <div class="form-group">
+        <label for="productNote">Chi Tiết:</label>
+        <textarea id="productNote" rows="3" placeholder="Enter notes or description" th:field="${product.title}"></textarea>
+    </div>
+    <input name="id" id="id" th:value="${product.id}" type="hidden">
+    <button onclick="editProduct()">UPDATE Product</button>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    function editProduct() {
+        const name = document.getElementById('productName').value.trim();
+        const price = parseFloat(document.getElementById('productPrice').value);
+        const calories = parseInt(document.getElementById('productCalories').value);
+        const weight = parseFloat(document.getElementById('productWeight').value);
+        const note = document.getElementById('productNote').value.trim();
+        const id = $("#id").val();
+
+        if (name === "" || isNaN(price) || price <= 0 || isNaN(calories) || calories <= 0 || isNaN(weight) || weight <= 0) {
+            alert("Please fill in all fields with valid values.");
+            return;
+        }
+
+        const product = { id: id, name: name, price: price, calories: calories, weight: weight, title: note };
+        $.ajax({
+            url: "/api/admin/update",
+            method: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(product),
+            success: (res) => {
+                console.log(res);
+                alert("UPDATE SUCCESS");
+                window.location.href = "/admin/"
+            },
+            error: (err) => {
+                console.log(err);
+                alert("FAIL");
+            }
+        })
+    }
+
+</script>
+</body>
+</html>

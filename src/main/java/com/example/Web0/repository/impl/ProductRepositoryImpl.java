@@ -19,17 +19,17 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
     @Override
     public List<ProductEntity> findProduct(ProductSearchRequest request) {
-        String sql = "SELECT * FROM product WHERE 1=1 ";
-        if (request.getName()!=null && request.getName().length()>0) {
-            sql += " AND name LIKE '%"+request.getName()+"%' ";
+        String sql = "SELECT * FROM products WHERE 1 = 1 ";
+        if (request.getName() != null && !request.getName().isEmpty()) {
+            sql += " AND name LIKE '%" + request.getName() + "%' ";
         }
-        if (request.getMinPrice() != null ) {
-            sql += " AND price >= " + request.getMinPrice().toString();
+        if (request.getMinPrice() != null) {
+            sql += " AND price >= " + request.getMinPrice();
         }
         if (request.getMaxPrice() != null) {
-            sql += " AND price <= " + request.getMaxPrice().toString();
+            sql += " AND price <= " + request.getMaxPrice();
         }
-        Query query = entityManager.createNativeQuery(sql.toString(), ProductEntity.class);
+        Query query = entityManager.createNativeQuery(sql, ProductEntity.class);
         return query.getResultList();
     }
 }

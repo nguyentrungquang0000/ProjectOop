@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/dang_ki.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="container">
+        <!-- Logo -->
+        <a href="trang_chu.html" class="navbar-brand">Cô Cô Shop</a>
+
+        <!-- Navbar -->
+        <nav class="navbar">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link " href="/trang_chu.html">Trang chủ</a></li>
+                <li class="nav-item"><a class="nav-link" href="/do_an.html">Thực đơn</a></li>
+
+
+            </ul>
+
+            <!-- Tìm kiếm -->
+            <div class="search-container">
+                <input type="search" id="search-bar" class="search-input" placeholder="Tìm kiếm sản phẩm...">
+                <button id="search-btn" class="search-btn">Tìm kiếm</button>
+            </div>
+
+            <!-- giỏ hàng -->
+            <form class="d-flex" id="cart" style="display: none;">
+                <a id="cart-icon" class="btn btn-outline-light" href="gio_hang.html">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span class="badge bg-danger text-white ms-2 rounded-pill">0</span>
+                </a>
+            </form>
+
+            <!-- User Menu -->
+            <ul class="navbar-user" id="navbar-user" style="display: none;">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="user-icon">
+                        <i class="fa-regular fa-circle-user"></i> Tên Người Dùng
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Thông tin</a></li>
+                        <li><a class="dropdown-item" href="#" id="logout-link">Đăng Xuất</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+
+            <!-- Đăng kí đăng nhập -->
+            <ul class="navbar-login">
+                <li class="nav-item">
+                    <a class="nav-link active" href="dang_ki.html">Đăng Kí</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="dang_nhap.html">Đăng Nhập</a>
+
+                </li>
+
+            </ul>
+
+
+        </nav>
+    </div>
+</header>
+
+<!-- Nội dung chính -->
+<div class="container">
+    <div class="register-form">
+        <h2>Đăng Ký Tài Khoản</h2>
+        <form onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label for="register-fullname">Họ và tên</label>
+                <input type="text" id="register-fullname" placeholder="Họ và tên" required>
+            </div>
+            <div class="form-group">
+                <label for="register-username">Tên Đăng Nhập</label>
+                <input type="text" id="register-username" placeholder="Tên đăng nhập" required>
+            </div>
+            <div class="form-group">
+                <label for="register-phonenumber">Số điện thoại</label>
+                <input type="text" id="register-phonenumber" placeholder="Số điện thoại" required>
+            </div>
+            <div class="form-group">
+                <label for="register-password">Mật Khẩu</label>
+                <input type="password" id="register-password" placeholder="Mật khẩu" required>
+            </div>
+            <div class="form-group">
+                <label for="register-confirm-password">Xác nhận mật khẩu</label>
+                <input type="password" id="register-confirm-password" placeholder="Xác nhận mật khẩu" required>
+            </div>
+
+            <button type="submit" class="btn-register">Đăng Ký</button>
+        </form>
+        <div class="login-link">
+            Đã có tài khoản? <a th:href="@{/login}">Đăng Nhập</a>
+        </div>
+    </div>
+</div>
+
+<!-- Footer-->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h2>Về Chúng Tôi</h2>
+            <p> Cô Cô Shop chuyên cung cấp các món ăn ngon và hấp dẫn, phục vụ mọi khách hàng với tiêu chí chất lượng và
+                sự hài lòng.</p>
+        </div>
+        <div class="footer-section">
+            <h2>Liên Hệ</h2>
+            <p>Số Điện Thoại: 0123 456 789</p>
+            <p>Email: cocoshop@gmail.com</p>
+        </div>
+        <div class="footer-section">
+            <h2>Địa Chỉ</h2>
+            <p>123 Đường Trần Phú, Phường Mỗ Lao, Quận Hà Đông, Hà Nội</p>
+        </div>
+    </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script th:src="@{/js/dang_ki.js}"></script>
+</body>
+</html>

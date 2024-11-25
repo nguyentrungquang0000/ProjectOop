@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Chi Tiết Món Ăn</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}"/>
+    <!-- Bootstrap icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <!-- Core theme CSS -->
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link th:href="@{/css/styles1.css}" rel="stylesheet"/>
+    <link th:href="@{/css/Menu.css}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link th:href="@{/css/Product_details.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="container">
+        <!-- Logo -->
+        <a th:href="@{/}" class="navbar-brand">Cô Cô Shop</a>
+
+        <!-- Navbar -->
+        <nav class="navbar">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link active" th:href="@{/}">Trang chủ</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/menu}">Thực đơn</a></li>
+
+
+            </ul>
+
+            <!-- Tìm kiếm -->
+            <div class="search-container">
+                <input type="search" id="search-bar" class="search-input" placeholder="Tìm kiếm sản phẩm...">
+                <button id="search-btn" class="search-btn">Tìm kiếm</button>
+            </div>
+
+            <!-- giỏ hàng -->
+            <form class="d-flex" id="cart">
+                <a id="cart-icon" class="btn btn-outline-light" th:href="@{/cart}">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                </a>
+            </form>
+
+            <!-- User Menu -->
+            <ul class="navbar-user" id="navbar-user" sec:authorize="${not isAnonymous()}">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="user-icon">
+                        <i class="fa-regular fa-circle-user"></i> <span
+                            th:text="${#authorization.getAuthentication().getName()}"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Thông tin</a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}" id="logout-link">Đăng Xuất</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Đăng kí đăng nhập -->
+            <ul class="navbar-login" sec:authorize="isAnonymous()">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/register}">Đăng Kí</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/login}">Đăng Nhập</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Main Content -->
+<section class="product-detail-section">
+    <div class="container product-detail-container">
+        <!-- Hình ảnh sản phẩm -->
+        <div class="product-detail-image">
+            <img th:src="@{/img/anh nuoc cam.png}" th:alt="${product.name}"/>
+        </div>
+
+        <!-- Thông tin sản phẩm -->
+        <div class="product-detail-info">
+            <h1 th:text="${product.name}"></h1>
+            <div class="price">
+                <span class="discounted-price" th:text="${product.price  + ' VNĐ'}"></span>
+            </div>
+            <p th:text="${product.title}"></p>
+            <div class="quantity-container">
+                <div class="quantity-control">
+                    <button class="decrease-btn" onclick="changeValue(-1)">-</button>
+                    <input type="number" id="quantity" class="quantity-input" value="1" min="1">
+                    <button class="increase-btn" onclick="changeValue(1)">+</button>
+                </div>
+                <button class="add-to-cart" id="addProduct" th:data-id="${product.id}">
+                    <i class="add-cart"></i> Thêm vào giỏ hàng
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sản phẩm gợi ý -->
+    <div class="container suggested-products">
+        <h2>Sản phẩm gợi ý</h2>
+        <div class="row justify-content-center">
+            <!-- Dòng sản phẩm gợi ý giống cấu trúc trong trang đồ ăn -->
+            <a th:href="@{/detail-{id}(id=${item.id})}" class="product-card col-3 d-block text-decoration-none text-black" th:each="item : ${listProduct}">
+                <img th:src="@{/img/ảnh nem nướng nha trang.png}" th:alt="${item.name}"/>
+                <h3 th:text="${item.name}"></h3>
+                <p class="price" th:text="${item.price + ' VNĐ'}"></p>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h2>Về Chúng Tôi</h2>
+            <p> Cô Cô Shop chuyên cung cấp các món ăn ngon và hấp dẫn, phục vụ mọi khách hàng với tiêu chí chất
+                lượng và sự hài lòng.</p>
+        </div>
+        <div class="footer-section">
+            <h2>Liên Hệ</h2>
+            <p>Số Điện Thoại: 0123 456 789</p>
+            <p>Email: cocoshop@gmail.com</p>
+        </div>
+        <div class="footer-section">
+            <h2>Địa Chỉ</h2>
+            <p>123 Đường Trần Phú, Phường Mỗ Lao, Quận Hà Đông, Hà Nội</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const changeValue = (quantity) => {
+        if(parseInt(document.querySelector('#quantity').value) + quantity >= 1)
+            document.querySelector('#quantity').value = parseInt(document.querySelector('#quantity').value) + quantity;
+    }
+    const btnAdd = document.querySelector("#addProduct");
+    btnAdd.addEventListener('click', () => {
+        const id = parseInt(btnAdd.dataset.id);
+        const quantity = parseInt(document.querySelector("#quantity").value);
+        $.ajax({
+            url: `/api/cartitem/${id}`,
+            method: "GET",
+            success: (res) => {
+                if (!res) {
+                    $.ajax({
+                        url: "/api/cartitem/add",
+                        method: "POST",
+                        data: JSON.stringify({
+                            productId: id,
+                            quantity: quantity
+                        }),
+                        contentType: "application/json",
+                        success: (res) => {
+                            alert(`Thêm thành công!`);
+                        },
+                        error: (err) => {
+                            alert(`Thêm thất bại!`);
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url: "/api/cartitem/update",
+                        method: "PUT",
+                        data: JSON.stringify({
+                            id: res['cartItemId'],
+                            productId: id,
+                            quantity: quantity
+                        }),
+                        contentType: "application/json",
+                        success: (res) => {
+                            alert(`Thêm thành công!`)
+                        },
+                        error: (err) => {
+                            alert(`Thêm thất bại!`);
+                        }
+                    });
+                }
+            },
+            error: (err) => {
+                window.location.href = "/login";
+                alert("Bạn chưa đănh nhập!");
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

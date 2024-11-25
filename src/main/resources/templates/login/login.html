@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập / Đăng Ký</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Tổng quát */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f7f7f7;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h2 {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .form-group {
+            display: none;
+        }
+
+        .form-group.active {
+            display: block;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background: #0056b3;
+        }
+
+        .cancel-btn {
+            width: 100%;
+            padding: 10px;
+            background: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .cancel-btn:hover {
+            background: #d32f2f;
+        }
+
+        .toggle-btns {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .toggle-btns button {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-btns button.active {
+            color: #0056b3;
+            font-weight: bold;
+        }
+
+        .toggle-btns button:not(:last-child) {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h2 id="formTitle">Đăng Nhập</h2>
+    </div>
+
+    <!-- Form Đăng Nhập -->
+    <div class="form-group active" id="loginForm">
+        <form id="login_form" method="post" action="/login">
+            <input type="text" id="username_login" placeholder="Tên đăng nhập" required name="username">
+            <input type="password" id="password_login" placeholder="Mật khẩu" required name="password">
+            <button type="submit" id="login_btn">Đăng Nhập</button>
+            <button type="button" class="cancel-btn" onclick="cancelForm()">Hủy</button>
+        </form>
+    </div>
+
+    <!-- Form Đăng Ký -->
+    <div class="form-group" id="registerForm">
+        <form id="register_form">
+            <input type="text" id="reg_username" placeholder="Tên đăng nhập" required>
+            <input type="password" id="reg_password" placeholder="Mật khẩu" required>
+            <input type="text" id="reg_fullname" placeholder="Họ và tên" required>
+            <input type="text" id="reg_phone" placeholder="Số điện thoại" required>
+            <button type="submit" id="register_btn">Đăng Ký</button>
+            <button type="button" class="cancel-btn" onclick="cancelForm()">Hủy</button>
+        </form>
+    </div>
+
+    <!-- Nút chuyển đổi -->
+    <div class="toggle-btns">
+        <button class="active" onclick="showForm('login')">Đăng Nhập</button>
+        <button onclick="showForm('register')">Đăng Ký</button>
+    </div>
+</div>
+
+<script>
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    const formTitle = document.getElementById("formTitle");
+    const toggleButtons = document.querySelectorAll(".toggle-btns button");
+
+    function showForm(formType) {
+        if (formType === "login") {
+            loginForm.classList.add("active");
+            registerForm.classList.remove("active");
+            formTitle.innerText = "Đăng Nhập";
+            toggleButtons[0].classList.add("active");
+            toggleButtons[1].classList.remove("active");
+        } else if (formType === "register") {
+            loginForm.classList.remove("active");
+            registerForm.classList.add("active");
+            formTitle.innerText = "Đăng Ký";
+            toggleButtons[0].classList.remove("active");
+            toggleButtons[1].classList.add("active");
+        }
+    }
+
+    function cancelForm() {
+        // Trở lại trang chủ hoặc về trang trước
+        window.location.href = "home.html"; // Hoặc có thể thay bằng window.history.back() để quay lại trang trước đó
+    }
+
+    // Xử lý đăng nhập
+
+    // Xử lý đăng ký
+    $("#register_form").submit(function (e) {
+        e.preventDefault(); // Ngăn việc submit form mặc định
+        const data = {
+            username: $("#reg_username").val(),
+            password: $("#reg_password").val(),
+            fullName: $("#reg_fullname").val(),
+            phoneNumber: $("#reg_phone").val(),
+        };
+        $.ajax({
+            url: "/api/register",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function () {
+                alert("Đăng ký thành công!");
+                showForm("login");
+            },
+            error: function () {
+                alert("Lỗi khi đăng ký! Vui lòng thử lại.");
+            },
+        });
+    });
+</script>
+</body>
+</html>

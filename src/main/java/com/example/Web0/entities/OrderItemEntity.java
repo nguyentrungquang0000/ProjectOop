@@ -25,6 +25,9 @@ public class OrderItemEntity {
     private ProductEntity product;
 
     private Long quantity;
+
     private Long price;
+
+
 }
 

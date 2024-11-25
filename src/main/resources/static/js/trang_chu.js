@@ -1,54 +1,149 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Lấy trạng thái đăng nhập từ localStorage
-    var isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    console.log("Trạng thái đăng nhập:", isLoggedIn);
 
-    // Nếu người dùng chưa đăng nhập, chuyển hướng tới trang đăng nhập khi bấm vào mục Thực Đơn
-    var menuLink = document.querySelector("a[href='/do_an.html']"); // Chọn liên kết với đường dẫn "/do_an.html"
-    if (menuLink) {
-        menuLink.addEventListener("click", function (event) {
-            if (!isLoggedIn) {
-                event.preventDefault();
-                alert("Bạn cần đăng nhập để truy cập mục Thực Đơn.");
-                window.location.href = "/dang_nhap.html"; // Đã thay trang đăng nhập đúng
-            }
-        });
+
+
+// let list = document.querySelector('.slider .list');
+// let items = document.querySelectorAll('.slider .list .item');
+// let dots = document.querySelectorAll('.slider .dots li');
+// let prev = document.getElementById('prev');
+// let next = document.getElementById('next');
+
+// // vị trí item đầu tiên =0
+// let active = 0; 
+// let lengthItems=items.length-1;
+
+// next.onclick=function(){
+//     if(active+1>lengthItems){
+//         active=0;
+//     }
+//     else{
+//         active=active+1;
+//     }
+//     reloadSlider();
+// }
+
+// prev.onclick = function(){
+//     if(active-1<0){
+//         active=lengthItems;
+//     }
+//     else{
+//         active=active-1;
+//     }
+//     reloadSlider();
+// }
+
+// let refreshSlider = setInterval(()=> {next.click()},3000);
+// function reloadSlider(){
+//     let checkLeft = items[active].offsetLeft;
+//     list.style.left = -checkLeft + 'px';
+
+//     let lastActiveDot = document.querySelector('.slider .dots li.active');
+//     lastActiveDot.classList.remove('active');
+//     dots[active].classList.add('active');
+//     clearInterval(refreshSlider);
+//     refreshSlider = setInterval(()=> {next.click()},3000);
+// }
+
+// dots.forEach((li,key ) =>{
+//     li.addEventListener('click',function(){
+//         active=key;
+//         reloadSlider();
+//     })
+// })
+
+
+
+
+
+let list = document.querySelector('.slider .list');
+let items = document.querySelectorAll('.slider .list .item');
+let dots = document.querySelectorAll('.slider .dots li');
+let prev = document.getElementById('prev');
+let next = document.getElementById('next');
+
+// vị trí item đầu tiên =0
+let active = 0; 
+let lengthItems = items.length - 1;
+
+// Thêm class active cho item đầu tiên
+items[active].classList.add('active');
+
+next.onclick = function() {
+    // Loại bỏ class active ở item cũ
+    items[active].classList.remove('active');
+    
+    // Tính toán item mới
+    if(active + 1 > lengthItems) {
+        active = 0;
     } else {
-        console.error("Không tìm thấy liên kết 'Thực Đơn'");
+        active = active + 1;
     }
-
-    // Kiểm tra xem người dùng có đang ở trang do_an.html không
-    // const currentPage = window.location.pathname;
-    // if (currentPage === "/do_an.html" && !isLoggedIn) {
-    //     alert("Bạn cần đăng nhập để truy cập mục Thực Đơn.");
-    //     window.location.href = "/dang_nhap.html"; // Đã thay trang đăng nhập đúng
-    // }
-});
-
-// Khởi tạo bản đồ
-function initMap() {
-    const location = { lat: 21.00096, lng: 105.8148101 };
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 15,
-        center: location,
-    });
-    const marker = new google.maps.Marker({
-        position: location,
-        map: map,
-        title: "Cô Cô Shop - Địa Chỉ Của Chúng Tôi"
-    });
+    
+    // Thêm class active cho item mới
+    items[active].classList.add('active');
+    
+    reloadSlider();
 }
 
+prev.onclick = function() {
+    // Loại bỏ class active ở item cũ
+    items[active].classList.remove('active');
+    
+    // Tính toán item mới
+    if(active - 1 < 0) {
+        active = lengthItems;
+    } else {
+        active = active - 1;
+    }
+    
+    // Thêm class active cho item mới
+    items[active].classList.add('active');
+    
+    reloadSlider();
+}
 
-document.addEventListener("DOMContentLoaded", function() {
-    const navLinks = document.querySelectorAll('.nav-link');
-    const currentPath = window.location.pathname;
+let refreshSlider = setInterval(() => {next.click()}, 3000);
 
-    navLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPath) {
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
-    });
+function reloadSlider() {
+    let checkLeft = items[active].offsetLeft;
+    list.style.left = -checkLeft + 'px';
+
+    let lastActiveDot = document.querySelector('.slider .dots li.active');
+    lastActiveDot.classList.remove('active');
+    dots[active].classList.add('active');
+    
+    clearInterval(refreshSlider);
+    refreshSlider = setInterval(() => {next.click()}, 3000);
+}
+
+dots.forEach((li, key) => {
+    li.addEventListener('click', function() {
+        // Loại bỏ class active ở item cũ
+        items[active].classList.remove('active');
+        
+        active = key;
+        
+        // Thêm class active cho item mới
+        items[active].classList.add('active');
+        
+        reloadSlider();
+    })
+})
+
+
+// Xử lý toggle menu
+const toggle = document.getElementById('toggle');
+const navbar = document.querySelector('.navbar');
+const header = document.querySelector('.header');
+
+toggle.addEventListener('click', () => {
+  // Lấy chiều cao của header
+  const headerHeight = header.offsetHeight;
+
+  // Đặt vị trí top của menu bằng chiều cao header
+  navbar.style.top = `${headerHeight}px`;
+
+  // Bật/tắt menu
+  navbar.classList.toggle('active');
 });
+
+

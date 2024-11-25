@@ -11,4 +11,6 @@ public interface ProductService {
     ProductEntity updateProduct(ProductRequest request);
     void deleteProduct(Long id);
     List<ProductEntity> searchProduct(ProductSearchRequest request);
+    ProductEntity getProduct(Long id);
+    List<ProductEntity> getProductAll();
 }

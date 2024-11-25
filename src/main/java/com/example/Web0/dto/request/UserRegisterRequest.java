@@ -1,10 +1,12 @@
 package com.example.Web0.dto.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserRegisterRequest {
     private String username;
     private String password;

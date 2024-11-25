@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/styles1.css}">
+    <link rel="stylesheet" th:href="@{/css/Pay.css}">
+</head>
+
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="container">
+        <!-- Logo -->
+        <a th:href="@{/static}" class="navbar-brand">Cô Cô Shop</a>
+
+        <!-- Navbar -->
+        <nav class="navbar">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link active" th:href="@{/}">Trang chủ</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/menu}">Thực đơn</a></li>
+            </ul>
+
+            <!-- Tìm kiếm -->
+            <div class="search-container">
+                <input type="search" id="search-bar" class="search-input" placeholder="Tìm kiếm sản phẩm...">
+                <button id="search-btn" class="search-btn">Tìm kiếm</button>
+            </div>
+
+            <!-- giỏ hàng -->
+            <form class="d-flex" id="cart" style="display: none;">
+                <a id="cart-icon" class="btn btn-outline-light" th:href="@{/templates/cart}">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    <span class="badge bg-danger text-white ms-2 rounded-pill">0</span>
+                </a>
+            </form>
+
+            <!-- User Menu -->
+            <ul class="navbar-user" id="navbar-user" sec:authorize="${not isAnonymous()}">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="user-icon">
+                        <i class="fa-regular fa-circle-user"></i> <span th:text="${#authentication.getName()}"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Thông tin</a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}" id="logout-link">Đăng Xuất</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Cột trái: Thông tin sản phẩm -->
+    <div class="column">
+        <table class="table table-bordered table-striped text-center">
+            <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên</th>
+                <th>Số lượng</th>
+                <th>Giá(VNĐ)</th>
+                <th>Thành tiền(VNĐ)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item, index : ${listCartItem}">
+                <td th:text="${index.count}"></td>
+                <td th:text="${item.product.name}"></td>
+                <td th:text="${item.quantity}"></td>
+                <td th:text="${item.product.price}"></td>
+                <td th:text="${item.totalPrice}" class="fw-bold"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <!-- Cột phải: Thông tin giao hàng và thanh toán -->
+    <div class="column">
+
+
+        <!-- Phương thức thanh toán -->
+        <section class="payment-info">
+            <h3>Phương thức thanh toán</h3>
+            <div class="input-group">
+                <label for="payment-method">Chọn phương thức thanh toán:</label>
+                <select id="payment-method">
+                    <option value="cod">Trả khi nhận hàng</option>
+                    <option value="qr">...</option>
+                </select>
+            </div>
+        </section>
+
+        <button id="pay-btn" class="pay-btn">Thanh Toán</button>
+        <a th:href="@{/cart}" class="back-btn" >Quay lại</a>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h2>Về Chúng Tôi</h2>
+            <p>Cô Cô Shop chuyên cung cấp các món ăn ngon và hấp dẫn, phục vụ mọi khách hàng với tiêu chí chất lượng
+                và sự hài lòng.</p>
+        </div>
+        <div class="footer-section">
+            <h2>Liên Hệ</h2>
+            <p>Số Điện Thoại: 0123 456 789</p>
+            <p>Email: cocoshop@gmail.com</p>
+        </div>
+        <div class="footer-section">
+            <h2>Địa Chỉ</h2>
+            <p>123 Đường Trần Phú, Phường Mỗ Lao, Quận Hà Đông, Hà Nội</p>
+        </div>
+    </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const btnPay = document.querySelector("#pay-btn");
+    btnPay.addEventListener("click", (evt) => {
+        evt.preventDefault();
+        $.ajax({
+            url: "/api/history/add",
+            method: "POST",
+            success: () => {
+                alert("Thanh toán thành công!");
+                window.location.href = "/history-order";
+            },
+            error: (err) => {
+                alert(err.responseText);
+            }
+        })
+    })
+</script>
+<script th:src="@{/js/Pay.js}"></script>
+</body>
+
+</html>
