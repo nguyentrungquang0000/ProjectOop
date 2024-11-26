@@ -27,15 +27,23 @@
 
     <div class="form-group">
         <label for="productWeight">Cân nặng (grams):</label>
-        <input type="number" id="productWeight" placeholder="Enter weight" th:value="${product.weight}">
+        <input type="number" id="productWeight" style="display: block" placeholder="Enter weight" th:value="${product.weight}">
     </div>
 
     <div class="form-group">
         <label for="productNote">Chi Tiết:</label>
         <textarea id="productNote" rows="3" placeholder="Enter notes or description" th:field="${product.title}"></textarea>
     </div>
+    <div class="form-group">
+        <label for="image">Ảnh:</label>
+        <input type="file" id="image"/>
+    </div>
+    <img th:src="${product.image}" alt="Sản phẩm mới" width="300px" id="preview" style="display: block;"/>
     <input name="id" id="id" th:value="${product.id}" type="hidden">
-    <button onclick="editProduct()">UPDATE Product</button>
+    <div style="display: flex; justify-content: space-evenly">
+        <button onclick="editProduct()">Sửa sản phẩm</button>
+        <button onclick="window.location.href='/admin/'">Huỷ thao tác</button>
+    </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -48,13 +56,24 @@
         const weight = parseFloat(document.getElementById('productWeight').value);
         const note = document.getElementById('productNote').value.trim();
         const id = $("#id").val();
+        let image = document.querySelector("#image").src;
+        document.querySelector("#image").addEventListener('change', (evt) => {
+            const data = evt.target.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(data);
+            reader.onload = () => {
+                image = reader.result;
+                console.log(image);
+                document.querySelector("#preview").src = image;
+            }
+        });
 
         if (name === "" || isNaN(price) || price <= 0 || isNaN(calories) || calories <= 0 || isNaN(weight) || weight <= 0) {
             alert("Please fill in all fields with valid values.");
             return;
         }
 
-        const product = { id: id, name: name, price: price, calories: calories, weight: weight, title: note };
+        const product = { id: id, name: name, price: price, calories: calories, weight: weight, title: note, image: image };
         $.ajax({
             url: "/api/admin/update",
             method: "PUT",

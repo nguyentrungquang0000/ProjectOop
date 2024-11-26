@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" th:href="@{/css/trang_chu.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+<div th:fragment="header">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <!-- Logo -->
+            <a th:href="@{/}" class="navbar-brand">Cô Cô Shop</a>
+            <div id="toggle">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <!-- Navbar -->
+            <nav class="navbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link active" th:href="@{/}">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/menu}">Thực đơn</a></li>
+                </ul>
+
+                <!-- Tìm kiếm -->
+                <div class="search-container">
+                    <form th:action="@{/}" method="get">
+                        <input name="name" type="search" id="search-bar" class="search-input"
+                               placeholder="Tìm kiếm sản phẩm...">
+                        <button id="search-btn" class="search-btn">Tìm kiếm</button>
+                    </form>
+                </div>
+
+                <!-- giỏ hàng -->
+                <form class="d-flex" id="cart" sec:authorize="${not isAnonymous()}">
+                    <a id="cart-icon" class="btn btn-outline-light" th:href="@{/cart}">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                        <span class="badge bg-danger text-white ms-2 rounded-pill">0</span>
+                    </a>
+                </form>
+
+                <!-- User Menu -->
+                <ul class="navbar-user" id="navbar-user" sec:authorize="hasAnyRole('ADMIN', 'USER')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="user-icon">
+                            <i class="fa-regular fa-circle-user"></i> <span
+                                th:text="${#authorization.getAuthentication().getName()}"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Thông tin</a></li>
+                            <li><a class="dropdown-item" th:href="@{/history-order}">Lịch sử</a></li>
+                            <li><a class="dropdown-item" th:href="@{/logout}" id="logout-link">Đăng Xuất</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+                <!-- Đăng kí đăng nhập -->
+                <ul class="navbar-login" sec:authorize="isAnonymous()">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/register}">Đăng Kí</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/login}">Đăng Nhập</a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
+    </header>
+    <header class="bg-dark py-5"
+            style="background-image:url('/img/z5988758369981_78ce8f05194dc70e81c1928769788ab1.jpg');">
+    </header>
+</div>
+<script th:src="@{/js/trang_chu.js}"></script>
+</body>
+</html>

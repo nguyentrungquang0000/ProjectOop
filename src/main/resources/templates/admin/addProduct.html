@@ -34,7 +34,12 @@
         <label for="productNote">Chi Tiết:</label>
         <textarea id="productNote" rows="3" placeholder="Enter notes or description"></textarea>
     </div>
-    <div style="display: flex; justify-content: space-between">
+    <div class="form-group">
+        <label for="image">Ảnh:</label>
+        <input type="file" id="image"/>
+    </div>
+    <img src="" alt="Sản phẩm mới" width="300px" id="preview" style="display: block"/>
+    <div style="display: flex; justify-content: space-evenly">
         <button onclick="addProduct()">Thêm sản phẩm</button>
         <button onclick="window.location.href='/admin/'">Huỷ thao tác</button>
     </div>
@@ -46,6 +51,17 @@
 <script>
     let productList = [];
     let totalRevenue = 0;
+    let image = null;
+    document.querySelector("#image").addEventListener('change', (evt) => {
+        const data = evt.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(data);
+        reader.onload = () => {
+            image = reader.result;
+            console.log(image);
+            document.querySelector("#preview").src = image;
+        }
+    });
 
     function addProduct() {
         const name = document.getElementById('productName').value.trim();
@@ -59,7 +75,7 @@
             return;
         }
 
-        const product = { name: name, price: price, calories: calories, weight: weight, title: note };
+        const product = {name: name, price: price, calories: calories, weight: weight, title: note, image: image};
         $.ajax({
             url: "/api/admin/add",
             method: "POST",

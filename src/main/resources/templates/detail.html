@@ -15,69 +15,33 @@
     <link th:href="@{/css/Menu.css}" rel="stylesheet">
     <!-- Custom CSS -->
     <link th:href="@{/css/Product_details.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/trang_chu.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <style>
+        .navbar .navbar-nav {
+            flex-direction: row;
+        }
+        .navbar-user {
+            margin-bottom: 0;
+        }
+        .navbar-login {
+            margin-bottom: 0;
+        }
+    </style>
 </head>
 
 <body>
 <!-- Header -->
-<header class="header">
-    <div class="container">
-        <!-- Logo -->
-        <a th:href="@{/}" class="navbar-brand">Cô Cô Shop</a>
-
-        <!-- Navbar -->
-        <nav class="navbar">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link active" th:href="@{/}">Trang chủ</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/menu}">Thực đơn</a></li>
-
-
-            </ul>
-
-            <!-- Tìm kiếm -->
-            <div class="search-container">
-                <input type="search" id="search-bar" class="search-input" placeholder="Tìm kiếm sản phẩm...">
-                <button id="search-btn" class="search-btn">Tìm kiếm</button>
-            </div>
-
-            <!-- giỏ hàng -->
-            <form class="d-flex" id="cart">
-                <a id="cart-icon" class="btn btn-outline-light" th:href="@{/cart}">
-                    <i class="fa-solid fa-basket-shopping"></i>
-                </a>
-            </form>
-
-            <!-- User Menu -->
-            <ul class="navbar-user" id="navbar-user" sec:authorize="${not isAnonymous()}">
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="user-icon">
-                        <i class="fa-regular fa-circle-user"></i> <span
-                            th:text="${#authorization.getAuthentication().getName()}"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Thông tin</a></li>
-                        <li><a class="dropdown-item" th:href="@{/logout}" id="logout-link">Đăng Xuất</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <!-- Đăng kí đăng nhập -->
-            <ul class="navbar-login" sec:authorize="isAnonymous()">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/register}">Đăng Kí</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/login}">Đăng Nhập</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<div th:replace="~{/partials/Header::header}"></div>
 
 <!-- Main Content -->
 <section class="product-detail-section">
     <div class="container product-detail-container">
         <!-- Hình ảnh sản phẩm -->
         <div class="product-detail-image">
-            <img th:src="@{/img/anh nuoc cam.png}" th:alt="${product.name}"/>
+            <img th:src="${product.image}" th:alt="${product.name}"/>
         </div>
 
         <!-- Thông tin sản phẩm -->
@@ -105,8 +69,9 @@
         <h2>Sản phẩm gợi ý</h2>
         <div class="row justify-content-center">
             <!-- Dòng sản phẩm gợi ý giống cấu trúc trong trang đồ ăn -->
-            <a th:href="@{/detail-{id}(id=${item.id})}" class="product-card col-3 d-block text-decoration-none text-black" th:each="item : ${listProduct}">
-                <img th:src="@{/img/ảnh nem nướng nha trang.png}" th:alt="${item.name}"/>
+            <a th:href="@{/detail-{id}(id=${item.id})}"
+               class="product-card col-3 d-block text-decoration-none text-black" th:each="item : ${listProduct}">
+                <img th:src="${item.image}" th:alt="${item.name}"/>
                 <h3 th:text="${item.name}"></h3>
                 <p class="price" th:text="${item.price + ' VNĐ'}"></p>
             </a>
@@ -115,32 +80,17 @@
 </section>
 
 <!-- Footer -->
-<footer class="footer">
-    <div class="footer-container">
-        <div class="footer-section">
-            <h2>Về Chúng Tôi</h2>
-            <p> Cô Cô Shop chuyên cung cấp các món ăn ngon và hấp dẫn, phục vụ mọi khách hàng với tiêu chí chất
-                lượng và sự hài lòng.</p>
-        </div>
-        <div class="footer-section">
-            <h2>Liên Hệ</h2>
-            <p>Số Điện Thoại: 0123 456 789</p>
-            <p>Email: cocoshop@gmail.com</p>
-        </div>
-        <div class="footer-section">
-            <h2>Địa Chỉ</h2>
-            <p>123 Đường Trần Phú, Phường Mỗ Lao, Quận Hà Đông, Hà Nội</p>
-        </div>
-    </div>
-</footer>
+<div th:replace="~{/partials/Footer::footer}"></div>
 
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script th:src="@{/js/dang_nhap.js}"></script>
+<script th:src="@{/js/trang_chu.js}"></script>
 <script>
     const changeValue = (quantity) => {
-        if(parseInt(document.querySelector('#quantity').value) + quantity >= 1)
+        if (parseInt(document.querySelector('#quantity').value) + quantity >= 1)
             document.querySelector('#quantity').value = parseInt(document.querySelector('#quantity').value) + quantity;
     }
     const btnAdd = document.querySelector("#addProduct");

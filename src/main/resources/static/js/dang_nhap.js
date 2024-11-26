@@ -68,59 +68,7 @@ function updateNavToLogout() {
 
 }
 
-// Hàm xử lý đăng nhập
-function handleLogin() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
 
-    if (username === "admin" && password === "123456") {
-        // Lưu trạng thái đăng nhập
-        localStorage.setItem("isLoggedIn", "true");
-
-        // Cập nhật navbar
-        updateNavToLogout();
-
-        // Thông báo thành công
-        alert("Đăng nhập thành công!");
-        window.location.href = "/trang_chu.html"; // Chuyển hướng đến trang chủ sau khi đăng nhập
-    } else {
-        // Hiển thị lỗi
-        const errorMessage = document.getElementById("error-message");
-        if (errorMessage) {
-            errorMessage.style.display = "block";
-            errorMessage.textContent = "Tên đăng nhập hoặc mật khẩu không đúng!";
-        }
-    }
-}
-
-// Hàm xử lý đăng xuất
-function handleLogout(event) {
-    event.preventDefault(); // Ngăn không chuyển hướng
-
-    // Xóa trạng thái đăng nhập
-    localStorage.setItem("isLoggedIn", "false");
-
-    // Đặt lại navbar
-    const navLinks = document.querySelectorAll(".nav-link");
-
-    navLinks.forEach(link => {
-        // Đặt lại "Đăng Xuất" thành "Đăng Nhập"
-        if (link.textContent.trim() === "Đăng Xuất") {
-            link.textContent = "Đăng Nhập";
-            link.onclick = null; // Gỡ bỏ sự kiện đăng xuất
-        }
-
-        // Đặt lại icon tài khoản thành "Đăng Kí"
-        if (link.innerHTML.includes("fa-user")) {
-            link.textContent = "Đăng Kí";
-            link.onclick = null;
-        }
-    });
-
-    // Thông báo thành công
-    alert("Bạn đã đăng xuất!");
-    window.location.href = "/trang_chu.html"; // Chuyển hướng về trang chủ sau khi đăng xuất
-}
 
 
 // kiểm tra xem đăng nhập chưa khi bấm vô giỏ hàng

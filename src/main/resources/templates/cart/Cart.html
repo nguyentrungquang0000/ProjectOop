@@ -7,79 +7,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Giỏ Hàng</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" th:href="@{/css/styles.css}">
+
   <link rel="stylesheet" th:href="@{/css/Cart.css}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+  <link rel="stylesheet" th:href="@{/css/trang_chu.css}">
 
 </head>
 
 <body>
 <!-- Header -->
-<header class="header">
-  <div class="container">
-    <!-- Logo -->
-    <a th:href="@{/}" class="navbar-brand">Cô Cô Shop</a>
-
-    <!-- Navbar -->
-    <nav class="navbar">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link active" th:href="@{/}">Trang chủ</a></li>
-        <li class="nav-item"><a class="nav-link" th:href="@{/menu}">Thực đơn</a></li>
-
-
-      </ul>
-
-      <!-- Tìm kiếm -->
-      <div class="search-container">
-        <input type="search" id="search-bar" class="search-input" placeholder="Tìm kiếm sản phẩm...">
-        <button id="search-btn" class="search-btn">Tìm kiếm</button>
-      </div>
-
-      <!-- giỏ hàng -->
-      <form class="d-flex" id="cart" style="display: none;">
-        <a id="cart-icon" class="btn btn-outline-light" href="Cart.html">
-          <i class="fa-solid fa-basket-shopping"></i>
-          <span class="badge bg-danger text-white ms-2 rounded-pill">0</span>
-        </a>
-      </form>
-
-      <!-- User Menu -->
-      <ul class="navbar-user" id="navbar-user" sec:authorize="${not isAnonymous()}">
-        <li class="nav-item">
-          <a class="nav-link" href="#" id="user-icon">
-            <i class="fa-regular fa-circle-user"></i> <span th:text="${#authorization.getAuthentication().getName()}"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Thông tin</a></li>
-            <li><a class="dropdown-item" href="#" id="logout-link">Đăng Xuất</a></li>
-          </ul>
-        </li>
-      </ul>
-
-
-
-      <!-- Đăng kí đăng nhập -->
-      <ul class="navbar-login" sec:authorize="isAnonymous()">
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/register}">Đăng Kí</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/login}">Đăng Nhập</a>
-
-        </li>
-
-      </ul>
-
-
-
-    </nav>
-  </div>
-</header>
-<header class="bg-dark py-5"
-        style="background-image:url('/img/z5988758369981_78ce8f05194dc70e81c1928769788ab1.jpg');">
-</header>
+<div th:replace="~{/partials/Header::header}"></div>
 
 
 <!-- Giỏ hàng -->
@@ -88,7 +28,7 @@
 
   <!-- Thông tin sản phẩm -->
   <div class="product-item" th:data-price="${item.product.price}" th:data-id="${item.cartItemId}" th:data-productid="${item.product.id}" th:each="item : ${listItems}">
-    <img src="https://example.com/kfc-combo.jpg" alt="Gà rán KFC" class="product-image">
+    <img th:src='${item.product.image}' alt="Gà rán KFC" class="product-image">
     <div class="product-info">
       <div class="product-name" th:text="${item.product.name}"></div>
       <div class="product-detail">Giá: <span class="product-price" th:text="${item.product.price}"></span> VND</div>
@@ -115,27 +55,11 @@
 </div>
 
 <!-- Footer-->
-<footer class="footer">
-  <div class="footer-container">
-    <div class="footer-section">
-      <h2>Về Chúng Tôi</h2>
-      <p> Cô Cô Shop chuyên cung cấp các món ăn ngon và hấp dẫn, phục vụ mọi khách hàng với tiêu chí chất
-        lượng và sự hài lòng.</p>
-    </div>
-    <div class="footer-section">
-      <h2>Liên Hệ</h2>
-      <p>Số Điện Thoại: 0123 456 789</p>
-      <p>Email: cocoshop@gmail.com</p>
-    </div>
-    <div class="footer-section">
-      <h2>Địa Chỉ</h2>
-      <p>123 Đường Trần Phú, Phường Mỗ Lao, Quận Hà Đông, Hà Nội</p>
-    </div>
-  </div>
-</footer>
+<div th:replace="~{/partials/Footer::footer}"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script th:src="@{/js/trang_chu.js}"></script>
 <script th:src="@{/js/Cart.js}"></script>
 </body>
 

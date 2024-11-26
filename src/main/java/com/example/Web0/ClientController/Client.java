@@ -6,6 +6,7 @@ import com.example.Web0.entities.*;
 import com.example.Web0.repository.UserRepository;
 import com.example.Web0.service.OrderHistoryService;
 import com.example.Web0.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -41,7 +42,8 @@ public class Client {
     }
 
     @GetMapping(value = {"/", ""})
-    public ModelAndView homePage(@ModelAttribute ProductSearchRequest productSearchRequest) {
+    public ModelAndView homePage(@ModelAttribute ProductSearchRequest productSearchRequest, HttpServletRequest request) {
+        System.out.println(request.getContextPath());
         List<ProductEntity> productEntities = productService.searchProduct(productSearchRequest);
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("listProduct", productEntities);

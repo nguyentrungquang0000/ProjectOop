@@ -11,4 +11,5 @@ public class MyExceptionHandler {
     public ResponseEntity<Object> handler(RuntimeException ex){
         return ResponseEntity.status(400).body(ex.getMessage());
     }
+
 }

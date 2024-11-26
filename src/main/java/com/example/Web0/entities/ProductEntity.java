@@ -25,6 +25,8 @@ public class ProductEntity {
     private Long price;
     @Column(name = "weight")
     private Long weight;
+    @Column(name = "image", columnDefinition = "LONGTEXT")
+    private String image;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<CartItemEntity> cartItems;
