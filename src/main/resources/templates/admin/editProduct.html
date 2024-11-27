@@ -49,6 +49,17 @@
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
+    let image = document.querySelector("#preview").src;
+    document.querySelector("#image").addEventListener('change', (evt) => {
+        const data = evt.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(data);
+        reader.onload = () => {
+            image = reader.result;
+            console.log(image);
+            document.querySelector("#preview").src = image;
+        }
+    });
     function editProduct() {
         const name = document.getElementById('productName').value.trim();
         const price = parseFloat(document.getElementById('productPrice').value);
@@ -56,22 +67,12 @@
         const weight = parseFloat(document.getElementById('productWeight').value);
         const note = document.getElementById('productNote').value.trim();
         const id = $("#id").val();
-        let image = document.querySelector("#image").src;
-        document.querySelector("#image").addEventListener('change', (evt) => {
-            const data = evt.target.files[0];
-            const reader = new FileReader();
-            reader.readAsDataURL(data);
-            reader.onload = () => {
-                image = reader.result;
-                console.log(image);
-                document.querySelector("#preview").src = image;
-            }
-        });
 
         if (name === "" || isNaN(price) || price <= 0 || isNaN(calories) || calories <= 0 || isNaN(weight) || weight <= 0) {
             alert("Please fill in all fields with valid values.");
             return;
         }
+
 
         const product = { id: id, name: name, price: price, calories: calories, weight: weight, title: note, image: image };
         $.ajax({

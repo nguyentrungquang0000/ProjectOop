@@ -37,7 +37,7 @@
     <main class="flex-1 p-6">
         <!-- Header -->
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold">Order List</h1>
+            <h1 class="text-2xl font-bold">Quản lí sản phẩm</h1>
             <div>
                 <a th:href="@{/admin/add-product}"
                    class="bg-blue-500 text-white px-4 py-2 rounded-lg mr-3">
@@ -52,7 +52,7 @@
 
         <!-- Product Search by Name and Price -->
         <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 class="text-xl font-bold mb-4">Tìm Kiêm Sàn Sản Phẩm</h2>
+            <h2 class="text-xl font-bold mb-4">Tìm Kiếm Sản Sản Phẩm</h2>
             <form class="flex items-center mb-4" method="get" th:action="@{/admin/}">
                 <input id="product-name" type="text" placeholder="Product Name"
                        name="name"
@@ -69,7 +69,7 @@
 
         <!-- Order Table -->
         <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-bold mb-4">Order List</h2>
+            <h2 class="text-xl font-bold mb-4">Danh sách sản phẩm</h2>
             <table class="w-full text-left border-collapse" id="order-table">
                 <thead>
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -82,8 +82,8 @@
                 </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
-                <tr class="border-b border-gray-200 hover:bg-gray-100" th:each="product : ${listProducts}">
-                    <td class="py-3 px-4" th:text="${product.id}"></td>
+                <tr class="border-b border-gray-200 hover:bg-gray-100" th:each="product,index : ${listProducts}">
+                    <td class="py-3 px-4" th:text="${index.count}"></td>
                     <td class="py-3 px-4" th:text="${product.name}"></td>
                     <td class="py-3 px-4" th:text="${product.price}"></td>
                     <td class="py-3 px-4" th:text="${product.calories}"></td>
@@ -124,7 +124,7 @@
                 },
                 error: (err) => {
                     console.log(err);
-                    alert("DELETE FAIL");
+                    alert("FAIL DELETE");
                 }
             })
         })

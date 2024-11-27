@@ -12,27 +12,27 @@
 
     <div class="form-group">
         <label for="productName">Tên sản phẩm:</label>
-        <input type="text" id="productName" placeholder="Enter product name">
+        <input type="text" id="productName" placeholder="Tên sản phẩm">
     </div>
 
     <div class="form-group">
         <label for="productPrice">Giá (VNĐ):</label>
-        <input type="number" id="productPrice" placeholder="Enter product price">
+        <input type="number" id="productPrice" placeholder="Giá">
     </div>
 
     <div class="form-group">
         <label for="productCalories">Calories (kcal):</label>
-        <input type="number" id="productCalories" placeholder="Enter calories">
+        <input type="number" id="productCalories" placeholder="Calo">
     </div>
 
     <div class="form-group">
         <label for="productWeight">Cân nặng (grams):</label>
-        <input type="number" id="productWeight" placeholder="Enter weight">
+        <input type="number" id="productWeight" placeholder="Cân nặng">
     </div>
 
     <div class="form-group">
-        <label for="productNote">Chi Tiết:</label>
-        <textarea id="productNote" rows="3" placeholder="Enter notes or description"></textarea>
+        <label for="productNote">Mô tả:</label>
+        <textarea id="productNote" rows="3" placeholder="Mô tả"></textarea>
     </div>
     <div class="form-group">
         <label for="image">Ảnh:</label>
@@ -84,6 +84,7 @@
             success: (res) => {
                 console.log(res);
                 alert("ADD SUCCESS");
+                window.location.href="/admin/"
             },
             error: (err) => {
                 console.log(err);
